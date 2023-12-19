@@ -49,17 +49,18 @@ VALUES
 go
 INSERT INTO Employees (DepartmentId, PositionId, FirstName, MiddleName, LastName, Address, PhoneNumber, BirthDate, HireDate, Salary, CompanyInfo)
 VALUES
-    (1, 1, 'John','Johnes', 'Doe', '123 Main St', '555-1234', '1990-01-01', '2020-01-15', 75000.00, 'ABC Inc.'),
-    (2, 2, 'Jane','Janes', 'Smith', '456 Oak St', '555-5678', '1985-05-15', '2019-05-10', 60000.00, 'XYZ Corp.'),
-    (1, 3, 'Bob','', 'Johnes', '789 Pine St', '555-8765', '1992-08-20', '2021-02-28', 80000.00, '123 Company'),
-	(3, 1, 'Alice','Jayson', 'Johnson', '111 Elm St', '555-1111', '1988-03-10', '2022-03-01', 90000.00, 'ABC Inc.'),
-    (2, 3, 'Tom','Tomason', 'Williams', '222 Maple St', '555-2222', '1995-07-25', '2021-09-15', 70000.00, 'XYZ Corp.'),
-    (1, 2, 'Emily', 'May', 'Davis', '333 Birch St', '555-3333', '1980-11-05', '2020-05-20', 85000.00, '123 Company'),
-    (3, 1, 'Michael','Mikeson', 'Brown', '444 Cedar St', '555-4444', '1993-12-15', '2022-01-10', 95000.00, 'ABC Inc.');
-
+    (1, 1, 'John','Johnes', 'Doe', '123 Main St', '555-1234', '1990-01-01', '2020-01-15', 5000.00, 'ABC Inc.'),
+    (2, 2, 'Jane','Janes', 'Smith', '456 Oak St', '555-5678', '1985-05-15', '2019-05-10', 2000.00, 'XYZ Corp.'),
+    (1, 3, 'Bob','', 'Johnes', '789 Pine St', '555-8765', '1992-08-20', '2021-02-28', 1000.00, '123 Company'),
+	(3, 1, 'Alice','Jayson', 'Johnson', '111 Elm St', '555-1111', '1988-03-10', '2022-03-01', 2500.00, 'ABC Inc.'),
+    (2, 3, 'Tom','Tomason', 'Williams', '222 Maple St', '555-2222', '1995-07-25', '2021-09-15', 2700.00, 'XYZ Corp.'),
+    (1, 2, 'Emily', 'May', 'Davis', '333 Birch St', '555-3333', '1980-11-05', '2020-05-20', 3200.00, '123 Company'),
+    (3, 1, 'Michael','Mikeson', 'Brown', '444 Cedar St', '555-4444', '1993-12-15', '2022-01-10', 7000.00, 'ABC Inc.');
+go
 
 -- for debug
 -- DO NOT USE
+
 --go
 --DELETE FROM Employees;
 --DBCC CHECKIDENT ('Employees', RESEED, 0);

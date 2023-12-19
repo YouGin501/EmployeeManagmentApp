@@ -16,7 +16,6 @@ namespace DAL.Interfaces
         Task UpdateEmployee(int id, Employee employee);
         Task DeleteEmployee(int id);
 
-        Task<Employee> SalaryInfoForEmployee(int employeeId, DateTime startPeriod, DateTime endPeriod);
         Task<IEnumerable<Employee>> GeneralSalaryInfo(DateTime startPeriod, DateTime endPeriod, int? departmentId, int? positionId);
     }
 }

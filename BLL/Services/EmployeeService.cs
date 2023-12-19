@@ -46,10 +46,5 @@ namespace BLL.Services
             var result = await _employeeRepository.GeneralSalaryInfo(startPeriod, endPeriod, departmentId, positionId);
             return result;
         }
-        public async Task<Employee> SalaryInfoForEmployee(int employeeId, DateTime startPeriod, DateTime endPeriod)
-        {
-            var result = await _employeeRepository.SalaryInfoForEmployee(employeeId, startPeriod, endPeriod);
-            return result;
-        }
     }
 }

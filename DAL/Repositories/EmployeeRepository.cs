@@ -277,8 +277,8 @@ namespace DAL.Repositories
                     Employees E 
                     INNER JOIN Departments D ON E.DepartmentId = D.Id
                     INNER JOIN Positions P ON E.PositionId = P.Id
-                    where E.HireDate < '{endPeriod}'" + (departmentId.HasValue ? " AND " + depCheck : " ") +
-                    (positionId.HasValue ? " AND " + posCheck : " ");
+                    where E.HireDate < '{endPeriod}'" + (departmentId.Value>0 ? " AND " + depCheck : " ") +
+                    (positionId.Value>0 ? " AND " + posCheck : " ");
                     
 
                 await connection.OpenAsync();
@@ -331,93 +331,9 @@ namespace DAL.Repositories
                     }
                 }
                 await connection.CloseAsync();
+
             }
             return list;
-        }
-        public async Task<Employee> SalaryInfoForEmployee(int employeeId, DateTime startPeriod, DateTime endPeriod)
-        {
-            DataTable dataTable = new DataTable();
-
-            if ((endPeriod - startPeriod).Days < 0)
-            {
-                throw new Exception("Wrong start or end period");
-            }
-
-            using (SqlConnection connection = new SqlConnection(StaticItems.StaticItems.ConnectionString))
-            {
-                string sqlCommand =
-                    @$"SELECT
-                    E.Id,
-                    E.FirstName,
-                    E.MiddleName,
-                    E.LastName,
-                    E.[Address],
-                    E.PhoneNumber,
-                    E.BirthDate,
-                    E.HireDate,
-                    E.Salary,
-                    E.CompanyInfo,
-                    E.DepartmentId,
-                    E.PositionId,
-                    D.DepartmentName,
-                    P.PositionName
-                FROM
-                    Employees E
-                    INNER JOIN Departments D ON E.DepartmentId = D.Id
-                    INNER JOIN Positions P ON E.PositionId = P.Id
-                    WHERE E.Id = {employeeId} AND E.HireDate <= '{endPeriod}'";
-
-                await connection.OpenAsync();
-                using (SqlCommand command = new SqlCommand(sqlCommand, connection))
-                {
-                    await command.ExecuteNonQueryAsync();
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        await Task.Run(() => adapter.Fill(dataTable));
-                    }
-                }
-                await connection.CloseAsync();
-
-                Employee result = new Employee()
-                {
-                    Id = Int32.Parse(dataTable.Rows[0]["Id"].ToString()),
-                    FirstName = dataTable.Rows[0]["FirstName"].ToString(),
-                    MiddleName = dataTable.Rows[0]["MiddleName"] == null ? " " : dataTable.Rows[0]["MiddleName"].ToString(),
-                    LastName = dataTable.Rows[0]["LastName"].ToString(),
-                    Address = dataTable.Rows[0]["Address"].ToString(),
-                    PhoneNumber = dataTable.Rows[0]["PhoneNumber"].ToString(),
-                    BirthDate = (DateTime)dataTable.Rows[0]["BirthDate"],
-                    HireDate = (DateTime)dataTable.Rows[0]["HireDate"],
-                    Salary = Decimal.Parse(dataTable.Rows[0]["Salary"].ToString()) / 30,
-                    CompanyInfo = dataTable.Rows[0]["CompanyInfo"].ToString(),
-                    DepartmentId = Int32.Parse(dataTable.Rows[0]["DepartmentId"].ToString()),
-                    PositionId = Int32.Parse(dataTable.Rows[0]["PositionId"].ToString()),
-                    Department = new Department()
-                    {
-                        Id = Int32.Parse(dataTable.Rows[0]["DepartmentId"].ToString()),
-                        DepartmentName = dataTable.Rows[0]["DepartmentName"].ToString()
-                    },
-                    Position = new Position()
-                    {
-                        Id = Int32.Parse(dataTable.Rows[0]["PositionId"].ToString()),
-                        PositionName = dataTable.Rows[0]["PositionName"].ToString()
-                    }
-                };
-
-                // Checks how many days did the employee work
-                int workingDays = 0;
-                if (result.HireDate <= startPeriod)
-                {
-                    workingDays = (endPeriod - startPeriod).Days;
-                }
-                else
-                {
-                    workingDays = (endPeriod - result.HireDate).Days;
-                }
-                result.Salary *= workingDays;
-
-                return result;
-            }
         }
     }
 }

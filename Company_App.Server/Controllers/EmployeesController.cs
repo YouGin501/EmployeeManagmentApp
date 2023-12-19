@@ -64,13 +64,5 @@ namespace PresentationLayer.Controllers
             var result = await _employeeService.GeneralSalaryInfo(startPeriod, endPeriod, departmentId, positionId);
             return Ok(result);
         }
-
-        [HttpGet]
-        [Route("EmployeeSalaryInfo")]
-        public async Task<ActionResult<Employee>> EmployeeSalaryInfo(DateTime startPeriod, DateTime endPeriod, int employeeId)
-        {
-            var result = await _employeeService.SalaryInfoForEmployee(employeeId, startPeriod, endPeriod);
-            return Ok(result);
-        }
     }
 }
